@@ -1,12 +1,21 @@
 import express from 'express';
-import './database/connection';
+import path from 'path';
+import cors from 'cors';
+import 'express-async-errors';
 import routes from './routes';
+import './database/connection';
+import errorhandler from './errors/hanlder';
 
 const app = express();
-
+/*Utilização do Cors, podemos passar valores de origem para mostar quais rotas serão de livre acesso pelo frontend */
+app.use(cors());
 //informa pro express que vamos usar Json
 app.use(express.json());
 app.use(routes);
+// Para poder acessar a url das imagens de cada orfanato
+app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')))
+//tratamento de erro, trocamos a mensagem por uma mais amigavel para o usuário
+app.use(errorhandler);
 
 //Rota = conjunto
 //Recurso = users
