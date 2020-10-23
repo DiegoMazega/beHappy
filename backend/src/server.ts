@@ -1,10 +1,12 @@
 import express from 'express';
 import './database/connection';
+import routes from './routes';
 
 const app = express();
 
 //informa pro express que vamos usar Json
 app.use(express.json());
+app.use(routes);
 
 //Rota = conjunto
 //Recurso = users
@@ -23,8 +25,5 @@ app.use(express.json());
  * body(não vão na url da requisição, e sim como um anexo a ela em seu corpo)
  */
 
-app.get('/users', (request, response)=>{
-    return response.json({message: "Hello World"})
-});
 
 app.listen(3333);
